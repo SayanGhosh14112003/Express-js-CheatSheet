@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheatSheet - Express Js</title>
+    <link rel="stylesheet" href="Lecture.css">
+</head>
+<body>
+    <h1>Express Js CheatSheet</h1>
+    <h2>How to Install Express</h2>
+    <div class="code">
+        <code><pre>npm init</pre><code>
+    </div>
+    <div class="code">
+       <code>
+        <pre>npm install express</pre>
+        <code>
+    </div>
+    <h2>
+        First 'Hello World!' Example
+    </h2>
+    <div class="code">
+        <code>
+            <pre>const express=require('express');
+const app=express();
+const PORT=process.env.PORT||8000;
+app.listen(PORT,()=>{
+    console.log('Listening at ',PORT);
+});
+app.get('/',(req,res)=>{
+    res.send('Hello World!');
+});</pre>
+        </code>
+    </div>
+    <h2>How to Serve Files</h2>
+    <div class="code">
+        <code>
+            <pre>app.get('/about',(req,res)=>{
+    res.sendFile(__dirname + '//about.html');
+});</pre>
+         </code>
+     </div>
+<h2>How to Download Files</h2>
+     <div class="code">
+        <code>
+            <pre>app.get('/download',(req,res)=>{
+    res.download(__dirname + '//download.html');
+});</pre>
+        </code>
+     </div>
+     <h2>How to Send Status Code</h2>
+     <div class="code">
+         <code>
+        <pre>app.get('/',(req,res)=>{
+    res.status(500);
+    res.send('Hello World!');
+});</pre>
+        </code>
+     </div>
+     <h2>How to Send JSON</h2>
+      <div class="code">
+        <code>
+            <pre>app.get('/',(req,res)=>{
+    res.json({username:'Sayan'});
+});</pre>
+        </code>
+    </div>
+    <h2>req.params</h2>
+    <div class="code"><code><pre>app.get('/hello/:username',(req,res)=>{
+    res.send("Hello " + req.params.username);
+});</pre></code></div>
+    <div class="code"><code><pre><u><b>URL:</b></u> http://localhost:8000/hello/sayan
+<u><b>OUTPUT:</b></u> Hello sayan</pre></code></div>
+    <h2>How to Keep Static Files</h2>
+    <div class="code">
+       <code>
+           <pre>//'public' is the name of the folder,where static files are kept
+app.use(express.static(__dirname + '//public'));</pre>
+       </code>
+    </div>
+    <h2>MiddleWare</h2>
+    <div class="code">
+        <code>
+            <pre>const middleWare=(req,res,next)=>{
+    console.log('It is  middlewire');
+    next();
+}</pre></code></div>
+    <div class="code">
+        <code>
+            <pre>app.use(middleWare);</pre></code></div>
+<div class="code"><code><pre>app.get('/about',middleWare,(req,res)=>{
+    res.sendFile(__dirname + '//public//about.html');
+});</pre></code></div>
+<h2>Template Engine(hbs)</h2>
+    <div class="code">
+       <code>
+        <pre>npm install hbs</pre>
+        <code>
+    </div>
+<div class="code">
+    <code><pre>const express=require('express');
+const app=express();
+const hbs=require('hbs');
+const PORT=process.env.PORT||8000;
+app.set('view engine','hbs');
+console.log(app.get('views'));
+//you must have 'views' folder in your root directory and hbs files must be there
+app.listen(PORT,()=>{
+    console.log('Listening at ',PORT);
+});
+app.get('/',(req,res)=>{
+    res.render('index.hbs',{
+        username:'Sayan',
+        userage:19
+    });
+});</pre></code>
+</div>
+<div class="code"><code><pre><u><b>Inside index.hbs file: </b></u>
+My name is {{username}}
+My age is {{userage}}
+</pre></code></div>
+<h2>How to Change the Name of 'views' Directory with 'temp'</h2>
+<div class="code"><code><pre>app.set('view engine','hbs');
+app.set('views',__dirname + '\\temp');
+console.log(app.get('views'));</pre></code></div>
+<div class="code"><code><pre><u><b>OUTPUT:</b></u> C:\Users\sayan\Express js\temp</pre></code></div>
+<h2>Partials</h2>
+<div class="code"><code><pre>//All files and folder can be kept outside 'views' folder.Don't be consfused.'views' is applicable only for rendering files
+hbs.registerPartials(__dirname + '//partials');</pre></code></div>
+<div class="code"><code><pre>//'part.hbs' is the name of the file where the code is written
+{{>part}}</pre></code></div>
+<h2>How to Handle '404' Error</h2>
+<div class="code"><code><pre>//Add this as bottom most route
+app.get('*',(req,res)=>{
+    res.status(404);
+    res.send('Not found');
+})</pre></code></div>
+<h2>Node Js Query Strings</h2>
+<div class="code"><code><pre><u><b>URL:</b></u> http://127.0.0.1:8000/?a=123&b=sayan&c=you
+req.query.a=123
+req.query.b=sayan
+req.query.c=you
+</pre></code></div>
+<h2>Router</h2>
+<div class="code"><code><pre>const express=require('express');
+const app=express();
+const PORT=process.env.PORT||8000;
+app.listen(PORT);
+app.use('/',require(__dirname+'\\templates\\blogs.js'));</pre></code></div>
+<div class="code"><code><pre>const express=require('express');
+const router=express.Router();
+const path=require('path');
+router.get('/',(req,res)=>{
+    res.sendFile(path.join(__dirname,'\\..\\routes\\index.html'));
+    
+});
+module.exports=router;</pre></code></div>
+</body>
+</html>
