@@ -149,7 +149,8 @@ const app=express();
 const PORT=process.env.PORT||8000;
 app.listen(PORT);
 app.use('/',require(__dirname+'\\templates\\blogs.js'));</pre></code></div>
-<div class="code"><code><pre>const express=require('express');
+<div class="code"><code><pre>//Inside 'blogs.js'
+const express=require('express');
 const router=express.Router();
 const path=require('path');
 router.get('/',(req,res)=>{
