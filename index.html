@@ -131,6 +131,10 @@ console.log(app.get('views'));</pre></code></div>
 hbs.registerPartials(__dirname + '//partials');</pre></code></div>
 <div class="code"><code><pre>//'part.hbs' is the name of the file where the code is written
 {{>part}}</pre></code></div>
+<div class="code"><code><pre>//'part.hbs' is the name of the file where the code is written
+app.get('/', (req, res) => {
+    res.render(__dirname+"//file.hbs");
+});</pre></code></div>
 <h2>How to Handle '404' Error</h2>
 <div class="code"><code><pre>//Add this as bottom most route
 app.get('*',(req,res)=>{
